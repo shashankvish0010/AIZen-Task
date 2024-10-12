@@ -1,0 +1,9 @@
+flask
+python-dotenv
+Flask-SQLAlchemy
+psycopg2
+Flask-cors
+flask-jwt-extended
+flask-bcrypt
+boto3
+hercai
