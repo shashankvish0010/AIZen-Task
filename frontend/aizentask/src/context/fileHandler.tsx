@@ -61,13 +61,16 @@ export const FileHandlerProvider = ({ children }: { children: ReactNode }) => {
     formdata.append("file", file);
     setLoader(true);
     try {
-      const response = await fetch("http://localhost:5000/file/upload", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${userauth?.accessToken}`,
-        },
-        body: formdata,
-      });
+      const response = await fetch(
+        "https://aizen-task.onrender.com/file/upload",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${userauth?.accessToken}`,
+          },
+          body: formdata,
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch image");
       }
@@ -85,7 +88,7 @@ export const FileHandlerProvider = ({ children }: { children: ReactNode }) => {
     setLoader(true);
     try {
       const response = await fetch(
-        "http://localhost:5000/file/generate/ai/images",
+        "https://aizen-task.onrender.com/file/generate/ai/images",
         {
           method: "POST",
           headers: {
@@ -111,7 +114,7 @@ export const FileHandlerProvider = ({ children }: { children: ReactNode }) => {
   const fetchAllImages = async (user_id: Number) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/file/fetch/all/images/${user_id}`,
+        `https://aizen-task.onrender.com/file/fetch/all/images/${user_id}`,
         {
           method: "GET",
         }

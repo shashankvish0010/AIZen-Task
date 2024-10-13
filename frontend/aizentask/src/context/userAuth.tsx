@@ -102,13 +102,16 @@ export const UserAuthProvider = ({ children }: { children: ReactNode }) => {
     e.preventDefault();
     setLoader(true);
     try {
-      const response = await fetch("http://localhost:5000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
+      const response = await fetch(
+        "https://aizen-task.onrender.com/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
 
       const data = await response.json();
       setLoader(false);
