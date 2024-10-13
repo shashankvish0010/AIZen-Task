@@ -11,12 +11,11 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(fileHandle?.images);
     fileHandle?.fetchAllImages(user?.currentuser?.id);
     if (user?.login == false) {
       navigate("/login");
     }
-  }, []);
+  }, [fileHandle?.fetchAllImages]);
 
   return (
     <div className="min-h-[100vh] w-screen p-3 flex flex-col items-center gap-5">
