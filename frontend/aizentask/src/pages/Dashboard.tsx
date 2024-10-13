@@ -21,13 +21,15 @@ const Dashboard: React.FC = () => {
     <div className="min-h-[100vh] w-screen p-3 flex flex-col items-center gap-5">
       <AiImageGenerator />
       <div className="md:w-[85vw] w-[80vw] flex flex-wrap items-center justify-evenly gap-3 p-3">
-        {fileHandle?.images.map((image) => (
-          <ImageContainer
-            imagename={image.imageName}
-            imageUrl={image.s3_Url}
-            uploadTime={image.uploadTime}
-          />
-        ))}
+        {fileHandle?.images &&
+          fileHandle?.images.map((image) => (
+            <ImageContainer
+              key={image.imageName} // It's a good practice to add a unique key
+              imagename={image.imageName}
+              imageUrl={image.s3_Url}
+              uploadTime={image.uploadTime}
+            />
+          ))}
       </div>
     </div>
   );
