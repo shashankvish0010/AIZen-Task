@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { UserAuthContext } from "../context/userAuth";
 
-const Header = () => {
+const Header: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const user = useContext(UserAuthContext);
   const navigate = useNavigate();
