@@ -23,7 +23,7 @@ class S3Service:
         
     def get_image_url(self, file_name):
        try:
-          return self.s3.generate_presigned_url('get_object', Params={'Bucket': self.bucket, 'Key': file_name})
+          return self.s3.generate_presigned_url('get_object', Params={'Bucket': self.bucket, 'Key': file_name}, ExpiresIn=518400)
        except ClientError as e:
         logging.error(e)
         return False
