@@ -15,7 +15,7 @@ const Dashboard: React.FC = () => {
     if (user?.login == false) {
       navigate("/login");
     }
-  }, [fileHandle?.fetchAllImages]);
+  }, [fileHandle?.fetchAllImages, fileHandle?.generateAiImages]);
 
   return (
     <div className="min-h-[100vh] w-screen p-3 flex flex-col items-center gap-5">
