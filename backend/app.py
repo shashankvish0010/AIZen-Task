@@ -1,13 +1,13 @@
 import os
 from flask import Flask
-# from flask_cors import CORS
+from flask_cors import CORS
 from extensions.extension import db, bcrypt, jwt
 from blueprints.auth.auth import auth_bp
 from dotenv import load_dotenv
 from blueprints.file.file import file_bp
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 load_dotenv()
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('DATABASE_URL')

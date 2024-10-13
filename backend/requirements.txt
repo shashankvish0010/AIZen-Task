@@ -2,7 +2,7 @@ flask
 python-dotenv
 Flask-SQLAlchemy
 psycopg2
-Flask-cors
+Flask-Cors
 flask-jwt-extended
 flask-bcrypt
 boto3

@@ -36,10 +36,10 @@ def login():
       return jsonify({"success": False, "message": error_message})
    
    user = User.query.filter_by(username=data['username']).first()
-
+   userdata = {"id": user.id, "firstname": user.firstname, "lastname": user.lastname, "email": user.email}
    if user and user.check_password(data['password']):
     access_token = create_access_token(identity=user.id)
-    return jsonify({"success": True, "access_token": access_token}), 200
+    return jsonify({"success": True, "access_token": access_token, "userdata": userdata, "message": "Login successfully"}), 200
    else:
     return jsonify({"success": False, "message": "Invalid username or password"}), 500
 
