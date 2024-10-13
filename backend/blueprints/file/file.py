@@ -27,17 +27,17 @@ def upload():
 
      if s3_service.upload_image(file, s3_filename):
         s3_url=s3_service.get_image_url(s3_filename)
-        new_image = File(user_id=user_id, filename=s3_filename, s3_key=s3_filename, s3_url=f"{s3_url}")
+        new_image = File(user_id=user_id, filename=file.filename, s3_key=s3_filename, s3_url=f"{s3_url}")
         db.session.add(new_image)
         db.session.commit()
 
         all_images = File.query.filter_by(user_id=user_id).all()
-        image_urls=[image.s3_url for image in all_images]
+        image_urls=[{"imageName": image.filename, "uploadTime": image.uploadTime, "s3_Url": image.s3_url } for image in all_images]
 
      if len(image_urls)>0:
-        return jsonify({"message": "Image uploaded successfully", "images": image_urls}), 201
+        return jsonify({"success": True,"message": "Image uploaded successfully", "images": image_urls}), 201
      else:
-        return jsonify({"error": "Failed to upload file"}), 500
+        return jsonify({"success": False, "message": "Failed to upload file"}), 500
     except Exception as e:
      return jsonify({"error": str(e)}), 500
     
@@ -46,6 +46,26 @@ def generate_ai_image():
     prompt = request.json["prompt"]
     try:
         image_result = herc.draw_image(model='simurg', prompt=prompt)
-        return jsonify({"ai_image": image_result})
+        if image_result:
+         return jsonify({"success": True, "ai_image": image_result}), 201
+        else:
+         return jsonify({"success": False, "message": "Try again.."}), 201
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e)}), 500
+    
+@file_bp.route('/fetch/all/images/<user_id>', methods=['GET'])
+def fetch_all_images(user_id):
+   try:
+    if user_id:
+     all_images = File.query.filter_by(user_id=user_id).all()
+     image_urls=[{"imageName": image.filename, "uploadTime": image.uploadTime, "s3_Url": image.s3_url } for image in all_images]
+    
+     if len(image_urls)>0:
+        return jsonify({"success": True, "message": "Images fetched successfully", "images": image_urls}), 201
+     else:
+        return jsonify({"success": False, "message": "Failed to fetch all images"}), 500
+    else:
+        return jsonify({"success": False, "message": "Userd Id not found"}), 500       
+     
+   except Exception as e:
+     return jsonify({"message": str(e)}), 500
